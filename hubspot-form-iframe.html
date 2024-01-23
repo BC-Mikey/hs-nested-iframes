@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HS Form in Single Iframe</title>
+  </head>
+  <body>
+    <script>
+      const iframe = document.createElement('iframe');
+      iframe.height = '900px';
+      iframe.width = '100%';
+      iframe.frameborder = '0';
+      iframe.scrolling = 'no';
+      iframe.onload = () => {
+        iframe.contentWindow.document.body.appendChild(hubspotScript);
+      };
+
+      const hubspotScript = document.createElement('script');
+      hubspotScript.charset = 'utf-8';
+      hubspotScript.type = 'text/javascript';
+      hubspotScript.src = '//js.hsforms.net/forms/shell.js';
+      hubspotScript.onload = () => {
+        iframe.contentWindow.document.body.appendChild(hubspotScriptExec);
+        iframe.contentWindow.document.body.appendChild(hubspotStyleTag);
+      };
+
+      const hubspotScriptExec = document.createElement('script');
+      hubspotScriptExec.innerText =
+        'hbspt.forms.create({' +
+        'portalId: "2656220",' +
+        'formId: "193c7ff3-5c7c-4042-86f9-8152fe6ec7ef",' +
+        '});';
+
+      const hubspotStyleTag = document.createElement('style');
+      hubspotStyleTag.innerText =
+        'body {' +
+        'background-color: rgba(204, 204, 204, 0.9);' +
+        'margin: 0;' +
+        'padding: 20px;' +
+        'height: 100%;' +
+        '}';
+
+      document.body.appendChild(iframe);
+    </script>
+  </body>
+</html>
